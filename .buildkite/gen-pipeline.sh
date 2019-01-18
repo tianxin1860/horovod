@@ -40,27 +40,27 @@ for test in ${tests[@]}; do
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
 
-  echo "- label: ':hammer: Test TensorFlow MNIST (${test})'"
+  echo "- label: ':muscle: Test TensorFlow MNIST (${test})'"
   echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist.py\""
   echo "  plugins:"
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
 
   if [[ ${test} != *"tf1_1_0"* && ${test} != *"tf1_6_0"* ]]; then
-    echo "- label: ':hammer: Test TensorFlow Eager MNIST (${test})'"
+    echo "- label: ':muscle: Test TensorFlow Eager MNIST (${test})'"
     echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist_eager.py\""
     echo "  plugins:"
     echo "  - docker-compose#v2.6.0:"
     echo "      run: ${test}"
   fi
 
-  echo "- label: ':hammer: Test Keras MNIST (${test})'"
+  echo "- label: ':muscle: Test Keras MNIST (${test})'"
   echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/keras_mnist_advanced.py\""
   echo "  plugins:"
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
 
-  echo "- label: ':hammer: Test PyTorch MNIST (${test})'"
+  echo "- label: ':muscle: Test PyTorch MNIST (${test})'"
   echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py --epochs 2\""
   echo "  plugins:"
   echo "  - docker-compose#v2.6.0:"

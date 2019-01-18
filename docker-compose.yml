@@ -1,5 +1,10 @@
 version: '2.3'
 services:
+  test-cpu:
+    build:
+      context: .
+      dockerfile: Dockerfile.test.cpu
+    privileged: true
   nvidia-smi:
     image: nvidia/cuda
     runtime: nvidia

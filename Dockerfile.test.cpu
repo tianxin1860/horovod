@@ -1,0 +1,78 @@
+ARG DEBIAN_VERSION=jessie
+FROM debian:${DEBIAN_VERSION}
+
+# Arguments for the build. DEBIAN_VERSION needs to be repeated becaus
+# the first usage only applies to the FROM tag.
+ARG DEBIAN_VERSION=jessie
+ARG PYTHON_VERSION=2.7
+ARG PYSPARK_VERSION=2.4.0
+ARG MPI_KIND=OpenMPI
+ARG TENSORFLOW_PACKAGE=tensorflow==1.12.0
+ARG KERAS_PACKAGE=keras==2.2.2
+ARG PYTORCH_PACKAGE=torch==1.0.0
+
+# Set default shell to /bin/bash
+SHELL ["/bin/bash", "-c"]
+
+# Use backports repository on Debian Jessie.
+RUN if [[ "${DEBIAN_VERSION}" == "jessie" ]]; then \
+        echo deb http://deb.debian.org/debian jessie-backports main >> /etc/apt/sources.list; \
+    fi
+
+# Install essential packages.
+RUN apt-get update -qq
+RUN apt-get install -y wget openssh-client git build-essential
+
+# Install Python.
+# Python 3.6 requires special handling in Debian `buster` since the default is Python 3.7.
+RUN if [[ "${PYTHON_VERSION}" == "3.6" ]]; then \
+        apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-dev python3-distutils; \
+    else \
+        apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-dev; \
+    fi
+RUN ln -s -f /usr/bin/python${PYTHON_VERSION} /usr/bin/python
+RUN wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm get-pip.py
+RUN pip install -U --force pip setuptools requests pytest
+
+# Install PySpark.
+RUN if [[ "${DEBIAN_VERSION}" == "jessie" ]]; then \
+        apt install -t jessie-backports -y openjdk-8-jdk-headless; \
+    else \
+        apt install -y openjdk-8-jdk-headless; \
+    fi
+RUN pip install pyspark==${PYSPARK_VERSION}
+
+# Install MPI.
+RUN if [[ ${MPI_KIND} == "OpenMPI" ]]; then \
+        wget -O /tmp/openmpi-3.0.0-bin.tar.gz https://github.com/uber/horovod/files/1596799/openmpi-3.0.0-bin.tar.gz && \
+            cd /usr/local && tar -zxf /tmp/openmpi-3.0.0-bin.tar.gz && ldconfig && \
+            echo "mpirun -allow-run-as-root -np 2 -H localhost:2 -bind-to none -map-by slot -mca mpi_abort_print_stack 1" > /mpirun_command; \
+    else \
+        apt-get install -y mpich && \
+            echo "mpirun -np 2" > /mpirun_command; \
+    fi
+
+# Install TensorFlow.
+RUN pip install ${TENSORFLOW_PACKAGE}
+
+# Install Keras.
+RUN pip install ${KERAS_PACKAGE} h5py scipy
+RUN mkdir -p ~/.keras
+RUN python -c "from keras.datasets import mnist; mnist.load_data()"
+
+# Install PyTorch.
+RUN if [[ ${PYTORCH_PACKAGE} == "torch-nightly" ]]; then \
+        pip install torch_nightly -v -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html; \
+    else \
+        pip install ${PYTORCH_PACKAGE} torchvision; \
+    fi
+
+# Install Horovod.
+COPY . /horovod
+RUN cd /horovod && python setup.py sdist
+RUN pip install -v /horovod/dist/horovod-*.tar.gz
+
+# Hack for compatibility of MNIST example with TensorFlow 1.1.0.
+RUN if [[ ${TENSORFLOW_PACKAGE} == "tensorflow==1.1.0" ]]; then \
+        sed -i "s/from tensorflow import keras/from tensorflow.contrib import keras/" /horovod/examples/tensorflow_mnist.py; \
+    fi

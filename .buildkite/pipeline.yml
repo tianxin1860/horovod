@@ -1,0 +1,5 @@
+steps:
+- label: ':hammer: nvidia-smi'
+  plugins:
+  - docker-compose#v2.6.0:
+      run: nvidia-smi

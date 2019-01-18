@@ -1,5 +1,5 @@
 steps:
-- label: ':docker: Build'
+- label: ':docker: Build test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2'
   plugins:
   - docker-compose#v2.6.0:
       build: test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2
@@ -8,31 +8,31 @@ steps:
 - wait
 
 - label: ':docker: Run PyTests'
-  command: bash -c "cd /horovod/test && (echo test_*.py | xargs -n 1 ${MPIRUN} pytest -v)"
+  command: bash -c "cd /horovod/test && (echo test_*.py | xargs -n 1 \${MPIRUN} pytest -v)"
   plugins:
   - docker-compose#v2.6.0:
       run: test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2
 
 - label: ':docker: Test TensorFlow MNIST'
-  command: bash -c "$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist.py"
+  command: bash -c "\$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist.py"
   plugins:
   - docker-compose#v2.6.0:
       run: test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2
 
 - label: ':docker: Test TensorFlow Eager MNIST'
-  command: bash -c "$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist_eager.py"
+  command: bash -c "\$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist_eager.py"
   plugins:
   - docker-compose#v2.6.0:
       run: test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2
 
 - label: ':docker: Test Keras MNIST'
-  command: bash -c "$(cat /mpirun_command) python /horovod/examples/keras_mnist_advanced.py"
+  command: bash -c "\$(cat /mpirun_command) python /horovod/examples/keras_mnist_advanced.py"
   plugins:
   - docker-compose#v2.6.0:
       run: test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2
 
 - label: ':docker: Test PyTorch MNIST'
-  command: bash -c "$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py"
+  command: bash -c "\$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py"
   plugins:
   - docker-compose#v2.6.0:
       run: test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2

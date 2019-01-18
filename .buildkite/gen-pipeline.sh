@@ -35,7 +35,7 @@ echo "- wait"
 # run all the tests
 for test in ${tests[@]}; do
   echo "- label: ':pytest: Run PyTests (${test})'"
-  echo "  command: bash -c \"cd /horovod/test && (echo test_*.py | xargs -n 1 \\\${MPIRUN} pytest -v)\""
+  echo "  command: bash -c \"cd /horovod/test && (echo test_*.py | xargs -n 1 \\\$(cat /mpirun_command) pytest -v)\""
   echo "  plugins:"
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"

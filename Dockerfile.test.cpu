@@ -12,7 +12,7 @@ ARG PYTORCH_PACKAGE=torch==1.0.0
 ARG PYSPARK_PACKAGE=pyspark==2.4.0
 
 # Set default shell to /bin/bash
-SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-cu"]
 
 # Use backports repository on Debian Jessie.
 RUN if [[ "${DEBIAN_VERSION}" == "jessie" ]]; then \
@@ -62,7 +62,8 @@ RUN python -c "from keras.datasets import mnist; mnist.load_data()"
 
 # Install PyTorch.
 RUN if [[ ${PYTORCH_PACKAGE} == "torch-nightly" ]]; then \
-        pip install torch_nightly -v -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html; \
+        pip install torch_nightly -v -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html && \
+            pip install torchvision_nightly; \
     else \
         pip install ${PYTORCH_PACKAGE} torchvision; \
     fi

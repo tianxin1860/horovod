@@ -7,14 +7,17 @@ steps:
 
 - wait
 
+- label: ':docker: Run PyTests'
+  command: bash -c "cd /horovod/test && (echo test_*.py | xargs -n 1 ${MPIRUN} pytest -v)"
+
 - label: ':docker: Test Keras MNIST'
-  command: bash -c 'eval "$(cat /mpirun_command) python /horovod/examples/keras_mnist_advanced.py"'
+  command: bash -c "$(cat /mpirun_command) python /horovod/examples/keras_mnist_advanced.py"
   plugins:
   - docker-compose#v2.6.0:
       run: test-cpu
 
 - label: ':docker: Test PyTorch MNIST'
-  command: bash -c 'eval "$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py"'
+  command: bash -c "$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py"
   plugins:
   - docker-compose#v2.6.0:
       run: test-cpu

@@ -37,7 +37,7 @@ for test in ${tests[@]}; do
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
 
-  if [[ ${test} != *"tf1.1.0"* && ${test} != *"tf1.6.0"* ]]; then
+  if [[ ${test} != *"tf1_1_0"* && ${test} != *"tf1_6_0"* ]]; then
     echo "- label: ':hammer: Test TensorFlow Eager MNIST (${test})'"
     echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist_eager.py\""
     echo "  plugins:"

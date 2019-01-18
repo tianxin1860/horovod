@@ -38,6 +38,7 @@ services:
         KERAS_PACKAGE: keras==2.0.0
         PYTORCH_PACKAGE: torch==0.4.0
         PYSPARK_PACKAGE: pyspark==2.1.2
+  # TODO: shows how to use GPUs
   nvidia-smi:
     image: nvidia/cuda
     runtime: nvidia

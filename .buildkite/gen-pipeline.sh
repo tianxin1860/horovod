@@ -61,7 +61,7 @@ for test in ${tests[@]}; do
   echo "      run: ${test}"
 
   echo "- label: ':hammer: Test PyTorch MNIST (${test})'"
-  echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py\""
+  echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py --epochs 2\""
   echo "  plugins:"
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"

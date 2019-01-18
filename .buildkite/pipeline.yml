@@ -9,6 +9,21 @@ steps:
 
 - label: ':docker: Run PyTests'
   command: bash -c "cd /horovod/test && (echo test_*.py | xargs -n 1 ${MPIRUN} pytest -v)"
+  plugins:
+  - docker-compose#v2.6.0:
+      run: test-cpu
+
+- label: ':docker: Test TensorFlow MNIST'
+  command: bash -c "$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist.py"
+  plugins:
+  - docker-compose#v2.6.0:
+      run: test-cpu
+
+- label: ':docker: Test TensorFlow Eager MNIST'
+  command: bash -c "$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist_eager.py"
+  plugins:
+  - docker-compose#v2.6.0:
+      run: test-cpu
 
 - label: ':docker: Test Keras MNIST'
   command: bash -c "$(cat /mpirun_command) python /horovod/examples/keras_mnist_advanced.py"

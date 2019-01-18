@@ -4,12 +4,12 @@ FROM debian:${DEBIAN_VERSION}
 # Arguments for the build. DEBIAN_VERSION needs to be repeated becaus
 # the first usage only applies to the FROM tag.
 ARG DEBIAN_VERSION=jessie
-ARG PYTHON_VERSION=2.7
-ARG PYSPARK_VERSION=2.4.0
 ARG MPI_KIND=OpenMPI
+ARG PYTHON_VERSION=2.7
 ARG TENSORFLOW_PACKAGE=tensorflow==1.12.0
 ARG KERAS_PACKAGE=keras==2.2.2
 ARG PYTORCH_PACKAGE=torch==1.0.0
+ARG PYSPARK_PACKAGE=pyspark==2.4.0
 
 # Set default shell to /bin/bash
 SHELL ["/bin/bash", "-c"]
@@ -40,7 +40,7 @@ RUN if [[ "${DEBIAN_VERSION}" == "jessie" ]]; then \
     else \
         apt install -y openjdk-8-jdk-headless; \
     fi
-RUN pip install pyspark==${PYSPARK_VERSION}
+RUN pip install ${PYSPARK_PACKAGE}
 
 # Install MPI.
 RUN if [[ ${MPI_KIND} == "OpenMPI" ]]; then \

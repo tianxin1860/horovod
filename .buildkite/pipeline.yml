@@ -2,7 +2,7 @@ steps:
 - label: ':docker: Build'
   plugins:
   - docker-compose#v2.6.0:
-      build: test-cpu
+      build: test-cpu-openmpi-py2.7-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2
       image-repository: gcr.io/uber-ma/user/asergeev/buildkite
 
 - wait
@@ -11,31 +11,31 @@ steps:
   command: bash -c "cd /horovod/test && (echo test_*.py | xargs -n 1 ${MPIRUN} pytest -v)"
   plugins:
   - docker-compose#v2.6.0:
-      run: test-cpu
+      run: test-cpu-openmpi-py2.7-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2
 
 - label: ':docker: Test TensorFlow MNIST'
   command: bash -c "$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist.py"
   plugins:
   - docker-compose#v2.6.0:
-      run: test-cpu
+      run: test-cpu-openmpi-py2.7-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2
 
 - label: ':docker: Test TensorFlow Eager MNIST'
   command: bash -c "$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist_eager.py"
   plugins:
   - docker-compose#v2.6.0:
-      run: test-cpu
+      run: test-cpu-openmpi-py2.7-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2
 
 - label: ':docker: Test Keras MNIST'
   command: bash -c "$(cat /mpirun_command) python /horovod/examples/keras_mnist_advanced.py"
   plugins:
   - docker-compose#v2.6.0:
-      run: test-cpu
+      run: test-cpu-openmpi-py2.7-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2
 
 - label: ':docker: Test PyTorch MNIST'
   command: bash -c "$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py"
   plugins:
   - docker-compose#v2.6.0:
-      run: test-cpu
+      run: test-cpu-openmpi-py2.7-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2
 
 - wait
 

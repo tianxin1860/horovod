@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.test.cpu
     privileged: true
-  test-cpu-openmpi-py2.7-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2:
+  test-cpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2:
     extends: test-cpu-base
     build:
       args:
@@ -16,7 +16,7 @@ services:
         KERAS_PACKAGE: keras==2.0.0
         PYTORCH_PACKAGE: torch==0.4.0
         PYSPARK_PACKAGE: pyspark==2.1.2
-  test-cpu-openmpi-py3.5-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2:
+  test-cpu-openmpi-py3_5-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2:
     extends: test-cpu-base
     build:
       args:
@@ -27,7 +27,7 @@ services:
         KERAS_PACKAGE: keras==2.0.0
         PYTORCH_PACKAGE: torch==0.4.0
         PYSPARK_PACKAGE: pyspark==2.1.2
-  test-cpu-openmpi-py3.6-tf1.1.0-keras2.0.0-torch0.4.0-pyspark2.1.2:
+  test-cpu-openmpi-py3_6-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2:
     extends: test-cpu-base
     build:
       args:

@@ -22,13 +22,10 @@ tests=( \
        test-cpu-mpich-py2_7-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \
        test-gpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2 \
        test-gpu-openmpi-py3_5-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2 \
-       test-gpu-openmpi-py3_6-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2 \
        test-gpu-openmpi-py2_7-tf1_6_0-keras2_1_2-torch0_4_1-pyspark2_3_2 \
        test-gpu-openmpi-py3_5-tf1_6_0-keras2_1_2-torch0_4_1-pyspark2_3_2 \
-       test-gpu-openmpi-py3_6-tf1_6_0-keras2_1_2-torch0_4_1-pyspark2_3_2 \
        test-gpu-openmpi-py2_7-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \
        test-gpu-openmpi-py3_5-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \
-       test-gpu-openmpi-py3_6-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \
        test-gpu-openmpi-py2_7-tfhead-kerashead-torchhead-pyspark2_4_0 \
        test-gpu-openmpi-py3_6-tfhead-kerashead-torchhead-pyspark2_4_0 \
        test-gpu-mpich-py2_7-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \

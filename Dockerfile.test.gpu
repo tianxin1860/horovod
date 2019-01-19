@@ -5,7 +5,7 @@ FROM nvidia/cuda:9.0-devel-ubuntu${UBUNTU_VERSION}
 # the first usage only applies to the FROM tag.
 ARG UBUNTU_VERSION=16.04
 ARG CUDNN_VERSION=7.4.1.5-1+cuda9.0
-ARG NCCL_VERSION=2.3.5-2+cuda9.0
+ARG NCCL_VERSION_OVERRIDE=2.3.5-2+cuda9.0
 ARG MPI_KIND=OpenMPI
 ARG PYTHON_VERSION=2.7
 ARG TENSORFLOW_PACKAGE=tensorflow-gpu==1.12.0
@@ -24,21 +24,17 @@ RUN apt-get install -y --allow-downgrades --allow-change-held-packages --no-inst
         git \
         build-essential \
         libcudnn7=${CUDNN_VERSION} \
-        libnccl2=${NCCL_VERSION} \
-        libnccl-dev=${NCCL_VERSION}
+        libnccl2=${NCCL_VERSION_OVERRIDE} \
+        libnccl-dev=${NCCL_VERSION_OVERRIDE}
 
 # Install Python.
-RUN apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-dev; \
+RUN apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-dev
 RUN ln -s -f /usr/bin/python${PYTHON_VERSION} /usr/bin/python
 RUN wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm get-pip.py
 RUN pip install -U --force pip setuptools requests pytest
 
 # Install PySpark.
-RUN if [[ "${DEBIAN_VERSION}" == "jessie" ]]; then \
-        apt install -t jessie-backports -y openjdk-8-jdk-headless; \
-    else \
-        apt install -y openjdk-8-jdk-headless; \
-    fi
+RUN apt install -y openjdk-8-jdk-headless
 RUN pip install ${PYSPARK_PACKAGE}
 
 # Install MPI.

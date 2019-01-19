@@ -38,6 +38,8 @@ for test in ${tests[@]}; do
   echo "  - docker-compose#v2.6.0:"
   echo "      build: ${test}"
   echo "      image-repository: gcr.io/uber-ma/user/asergeev/buildkite"
+  echo "  agents:"
+  echo "    queue: builders"
 done
 
 # wait for all builds to finish
@@ -57,7 +59,7 @@ for test in ${tests[@]}; do
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
   echo "  agents:"
-  echo "    queue: builders"
+  echo "    queue: ${queue}"
 
   echo "- label: ':muscle: Test TensorFlow MNIST (${test})'"
   echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/tensorflow_mnist.py\""
@@ -74,7 +76,7 @@ for test in ${tests[@]}; do
     echo "  - docker-compose#v2.6.0:"
     echo "      run: ${test}"
     echo "  agents:"
-  echo "    queue: ${queue}"
+    echo "    queue: ${queue}"
   fi
 
   echo "- label: ':muscle: Test Keras MNIST (${test})'"
@@ -86,7 +88,7 @@ for test in ${tests[@]}; do
   echo "    queue: ${queue}"
 
   echo "- label: ':muscle: Test PyTorch MNIST (${test})'"
-  echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py --epochs 2\""
+  echo "  command: bash -c \"\\\$(cat /mpirun_command) python /horovod/examples/pytorch_mnist.py\""
   echo "  plugins:"
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"

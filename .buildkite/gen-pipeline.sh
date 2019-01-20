@@ -28,6 +28,7 @@ set -eu
 #       test-gpu-mpich-py2_7-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \
 #       )
 tests=( \
+       test-cpu-openmpi-py2_7-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \
        test-gpu-openmpi-py2_7-tf1_12_0-keras2_2_2-torch1_0_0-pyspark2_4_0 \
        )
 

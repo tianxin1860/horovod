@@ -143,6 +143,10 @@ services:
       context: .
       dockerfile: Dockerfile.test.gpu
     runtime: nvidia
+    # We plumb CUDA_VISIBLE_DEVICES instead of NVIDIA_VISIBLE_DEVICES because
+    # the latter does not work in privileged mode that we use in the containers.
+    environment:
+      - CUDA_VISIBLE_DEVICES
     privileged: true
   test-gpu-openmpi-py2_7-tf1_1_0-keras2_0_0-torch0_4_0-pyspark2_1_2:
     extends: test-gpu-base

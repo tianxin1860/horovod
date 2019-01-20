@@ -38,8 +38,9 @@ build_test() {
   echo "  plugins:"
   echo "  - docker-compose#v2.6.0:"
   echo "      build: ${test}"
-  echo "      image-repository: gcr.io/uber-ma/user/asergeev/buildkite"
+  echo "      image-repository: 091976041309.dkr.ecr.us-east-1.amazonaws.com/buildkite"
   echo "      config: docker-compose.test.yml"
+  echo "  timeout_in_minutes: 15"
   echo "  agents:"
   echo "    queue: builders"
 }
@@ -56,6 +57,7 @@ run_test() {
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
   echo "      config: docker-compose.test.yml"
+  echo "  timeout_in_minutes: 10"
   echo "  agents:"
   echo "    queue: ${queue}"
 }

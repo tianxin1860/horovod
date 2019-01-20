@@ -57,7 +57,7 @@ run_test() {
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
   echo "      config: docker-compose.test.yml"
-  echo "  timeout_in_minutes: 10"
+  echo "  timeout_in_minutes: 5"
   echo "  agents:"
   echo "    queue: ${queue}"
 }

@@ -56,8 +56,8 @@ run_test() {
   echo "  - docker-compose#v2.6.0:"
   echo "      run: ${test}"
   echo "      config: docker-compose.test.yml"
-#  echo "      env:"
-#  echo "        - NVIDIA_VISIBLE_DEVICES"
+  echo "      env:"
+  echo "        - CUDA_VISIBLE_DEVICES"
   echo "  agents:"
   echo "    queue: ${queue}"
 }

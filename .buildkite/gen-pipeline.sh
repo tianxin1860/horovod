@@ -83,7 +83,7 @@ for test in ${tests[@]}; do
 
   run_test "${test}" "${queue}" \
     ":pytest: Run PyTests (${test})" \
-    "bash -c \"cd /horovod/test && (echo test_*.py | xargs -n 1 \\\$(cat /mpirun_command) pytest -v)\""
+    "bash -c \"cd /horovod/test && (echo test_*.py | xargs -n 1 \\\$(cat /mpirun_command) pytest -v --capture=no)\""
 
   run_test "${test}" "${queue}" \
     ":muscle: Test TensorFlow MNIST (${test})" \
